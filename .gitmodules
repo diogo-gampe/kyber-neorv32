@@ -1,0 +1,6 @@
+[submodule "third_party/neorv32"]
+	path = third_party/neorv32
+	url = https://github.com/stnolting/neorv32.git
+[submodule "third_party/RISCV-crypto"]
+	path = third_party/RISCV-crypto
+	url = https://github.com/cggewehr/RISCV-crypto.git

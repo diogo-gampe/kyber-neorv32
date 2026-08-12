@@ -1,0 +1,53 @@
+
+# Codex / workspace local
+.agents/
+.codex/
+
+# C / embedded build artifacts
+**/build/
+*.o
+*.d
+*.elf
+*.bin
+*.map
+*.lst
+*.hex
+*.mem
+
+# NEORV32 generated image
+sw/**/neorv32_imem_image.vhd
+
+# Simulation artifacts
+**/wave.vcd
+*.vcd
+*.fst
+*.ghw
+*.wlf
+transcript
+*.cf
+
+# Quartus generated artifacts
+hw/quartus/db/
+hw/quartus/incremental_db/
+hw/quartus/output_files/
+hw/quartus/*.bak
+hw/quartus/*.rpt
+hw/quartus/*.summary
+hw/quartus/*.done
+hw/quartus/*.sof
+hw/quartus/*.pof
+hw/quartus/*.jdi
+hw/quartus/*.sld
+hw/quartus/*.pin
+hw/quartus/*.qmsg
+hw/quartus/*.rdb
+hw/quartus/*.log
+hw/quartus/*.txt
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
