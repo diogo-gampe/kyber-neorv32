@@ -1,0 +1,52 @@
+===============================================================================================
+				TESTE 1
+===============================================================================================
+------------------------------ Config 1 -------------------------------------------------------
+===============================================================================================
+NEORV32_HOME            = ../../third_party/neorv32
+RISCV_CRYPTO_HOME      = ../../third_party/RISCV-crypto
+MARCH                  = rv32imc_zicsr_zifencei_zbkb_zbkc_zbkx_zkne_zknh
+MABI                   = ilp32
+EFFORT                 = -Os
+KYBER_STRENGTH         = 512 (KYBER_K=2)
+KYBER_SYM              = 90s
+TURBOSHAKE             = 0
+XOF                    = AES-256-CTR
+PRF                    = AES-256-CTR
+hash_h                 = SHA-256
+hash_g                 = SHA-512
+KDF                    = SHA-256
+AES                    = 256
+ZBKB                   = 1
+AES_ASM                = 0
+SHA256_ZKNH            = 0
+SHA512_ZKNH            = 0
+KYBER_ISE              = 0
+ASCON_ISE              = 0
+CUSTOM_BINUTILS_PREFIX = 
+ROM_SIZE               = 256k
+RAM_SIZE               = 64k
+KYBER_PARAM_DEFS       = -DKYBER_K=2
+SYM_DEFS               = -DKYBER_90S=1
+IMPL_DEFS              = -DTC_AES_256=1 -DRVKINTRIN_ASSEMBLER=1
+APP_DEFS               = -DKYBER_K=2 -DKYBER_90S=1 -DTC_AES_256=1 -DRVKINTRIN_ASSEMBLER=1
+APP_SRC_COUNT          = 18
+-------------------------------- Results 1 ----------------------------------------------
+./neorv32_kyber_tb.vhd:398:11:@290236410ns:(report note): Kyber execution summary:
+./neorv32_kyber_tb.vhd:399:11:@290236410ns:(report note):   keypair_cycles=4138225
+./neorv32_kyber_tb.vhd:400:11:@290236410ns:(report note):   enc_cycles=6505123
+./neorv32_kyber_tb.vhd:401:11:@290236410ns:(report note):   dec_cycles=3809813
+./neorv32_kyber_tb.vhd:402:11:@290236410ns:(report note):   compare_cycles=1114
+./neorv32_kyber_tb.vhd:403:11:@290236410ns:(report note):   total_cycles=14454390
+./neorv32_kyber_tb.vhd:405:11:@290236410ns:(report note):   keypair_cpi=6.744393559112096
+./neorv32_kyber_tb.vhd:406:11:@290236410ns:(report note):   enc_cpi=8.185983796966273
+./neorv32_kyber_tb.vhd:407:11:@290236410ns:(report note):   dec_cpi=4.265452949520757
+./neorv32_kyber_tb.vhd:408:11:@290236410ns:(report note):   compare_cpi=4.720338983050848
+./neorv32_kyber_tb.vhd:409:11:@290236410ns:(report note):   total_cpi=5.1622821428571426e5
+./neorv32_kyber_tb.vhd:412:13:@290236410ns:(report note): Kyber finished successfully: GPIO0=1
+simulation stopped @290236410ns
+==============================================================================================
+				TESTE 2
+==============================================================================================
+------------------------------- Config 2 -----------------------------------------------------
+
