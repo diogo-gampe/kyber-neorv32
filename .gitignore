@@ -2,6 +2,7 @@
 # Codex / workspace local
 .agents/
 .codex/
+./AGENTS.md
 
 # C / embedded build artifacts
 **/build/
