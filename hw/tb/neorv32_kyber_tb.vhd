@@ -287,6 +287,15 @@ begin
     variable dec_cycles        : natural := 0;
     variable compare_cycles    : natural := 0;
     variable total_cycles      : natural := 0;
+    variable instr_count       : natural := 0;
+    variable start_instr       : natural := 0;
+    variable end_instr         : natural := 0;
+    variable stage_start_instr : natural := 0;
+    variable keypair_instr     : natural := 0;
+    variable enc_instr         : natural := 0;
+    variable dec_instr         : natural := 0;
+    variable compare_instr     : natural := 0;
+    variable total_instr       : natural := 0;
 
     variable kyber_stage       : string(1 to 50) := (others => ' ');
 
@@ -311,6 +320,15 @@ begin
         dec_cycles := 0;
         compare_cycles := 0;
         total_cycles := 0;
+        instr_count := 0;
+        start_instr := 0;
+        end_instr := 0;
+        stage_start_instr := 0;
+        keypair_instr := 0;
+        enc_instr := 0;
+        dec_instr := 0;
+        compare_instr := 0;
+        total_instr := 0;
 
         kyber_stage := (others => ' ');
         kyber_stage(1 to 12) := "Idle/Unknown";
@@ -320,15 +338,19 @@ begin
           case last_gpio is
             when KYBER_KEYPAIR_START =>
               keypair_cycles := cycles - stage_start_cycle;
+              keypair_instr := instr_count - stage_start_instr;
 
             when KYBER_KEYPAIR_DONE =>
               enc_cycles := cycles - stage_start_cycle;
+              enc_instr := instr_count - stage_start_instr;
 
             when KYBER_ENC_DONE =>
               dec_cycles := cycles - stage_start_cycle;
+              dec_instr := instr_count - stage_start_instr;
 
             when KYBER_DEC_DONE | KYBER_COMPARE =>
               compare_cycles := compare_cycles + (cycles - stage_start_cycle);
+              compare_instr := compare_instr + (instr_count - stage_start_instr);
 
             when others =>
               null;
@@ -339,6 +361,7 @@ begin
           case cur_gpio is
             when KYBER_KEYPAIR_START =>
               start_cycle := cycles;
+              start_instr := instr_count;
               kyber_stage(1 to 27) := "Kyber Keypair Gen. Started!";
 
             when KYBER_KEYPAIR_DONE =>
@@ -361,7 +384,12 @@ begin
           end case;
 
           stage_start_cycle := cycles;
+          stage_start_instr := instr_count;
           last_gpio := cur_gpio;
+        end if;
+
+        if trace_cpu0.valid = '1' then
+          instr_count := instr_count + 1;
         end if;
 
         if (cycles mod PRINT_PERIOD) = 0 then
@@ -374,25 +402,31 @@ begin
 
         if done then
           end_cycle := cycles;
+          end_instr := instr_count;
 
           case last_gpio is
             when KYBER_KEYPAIR_START =>
               keypair_cycles := cycles - stage_start_cycle;
+              keypair_instr := instr_count - stage_start_instr;
 
             when KYBER_KEYPAIR_DONE =>
               enc_cycles := cycles - stage_start_cycle;
+              enc_instr := instr_count - stage_start_instr;
 
             when KYBER_ENC_DONE =>
               dec_cycles := cycles - stage_start_cycle;
+              dec_instr := instr_count - stage_start_instr;
 
             when KYBER_DEC_DONE | KYBER_COMPARE =>
               compare_cycles := compare_cycles + (cycles - stage_start_cycle);
+              compare_instr := compare_instr + (instr_count - stage_start_instr);
 
             when others =>
               null;
           end case;
 
           total_cycles := end_cycle - start_cycle;
+          total_instr := end_instr - start_instr;
 
           report "Kyber execution summary:" severity note;
           report "  keypair_cycles=" & integer'image(keypair_cycles) severity note;
@@ -400,6 +434,16 @@ begin
           report "  dec_cycles="     & integer'image(dec_cycles) severity note;
           report "  compare_cycles=" & integer'image(compare_cycles) severity note;
           report "  total_cycles="   & integer'image(total_cycles) severity note;
+          report "  keypair_instructions=" & integer'image(keypair_instr) severity note;
+          report "  enc_instructions="     & integer'image(enc_instr) severity note;
+          report "  dec_instructions="     & integer'image(dec_instr) severity note;
+          report "  compare_instructions=" & integer'image(compare_instr) severity note;
+          report "  total_instructions="   & integer'image(total_instr) severity note;
+          report "  keypair_cpi=" & real'image(real(keypair_cycles) / real(keypair_instr)) severity note;
+          report "  enc_cpi="     & real'image(real(enc_cycles) / real(enc_instr)) severity note;
+          report "  dec_cpi="     & real'image(real(dec_cycles) / real(dec_instr)) severity note;
+          report "  compare_cpi=" & real'image(real(compare_cycles) / real(compare_instr)) severity note;
+          report "  total_cpi="   & real'image(real(total_cycles) / real(total_instr)) severity note;
 
           if gpio_out(0) = '1' then
             report "Kyber finished successfully: GPIO0=1" severity note;
