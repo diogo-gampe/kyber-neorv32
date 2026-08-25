@@ -13,6 +13,7 @@ entity neorv32_kyber_tb is
     IMEM_SIZE        : natural := 256*1024;
     DMEM_SIZE        : natural := 64*1024;
     TRACE_LOG_EN     : boolean := false;
+    PROGRESS_REPORT_EN : boolean := false;
     TIMEOUT_CYCLES   : natural := 100000000
   );
 end entity;
@@ -265,7 +266,7 @@ begin
 
   track_progress: process(clk)
 
-    constant PRINT_PERIOD        : natural := 50000;
+    constant PRINT_PERIOD        : natural := 5000;
     constant KYBER_KEYPAIR_START : std_ulogic_vector(7 downto 0) := x"40";
     constant KYBER_KEYPAIR_DONE  : std_ulogic_vector(7 downto 0) := x"50";
     constant KYBER_ENC_DONE      : std_ulogic_vector(7 downto 0) := x"60";
@@ -392,7 +393,7 @@ begin
           instr_count := instr_count + 1;
         end if;
 
-        if (cycles mod PRINT_PERIOD) = 0 then
+        if(cycles mod PRINT_PERIOD= 0) then
           dur_cycle := cycles - start_cycle;
           report "Total cycles from startup=" & integer'image(cycles) &
                  " Cycles since Kyber Started=" & integer'image(dur_cycle) &

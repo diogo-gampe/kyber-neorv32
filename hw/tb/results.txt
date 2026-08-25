@@ -1,259 +1,303 @@
-===============================================================================================
-							   TESTE 1
-===============================================================================================
------------------------------- Config 1 -------------------------------------------------------
-===============================================================================================
-NEORV32_HOME            = ../../third_party/neorv32
-RISCV_CRYPTO_HOME      = ../../third_party/RISCV-crypto
-MARCH                  = rv32imc_zicsr_zifencei_zbkb_zbkc_zbkx_zkne_zknh
-MABI                   = ilp32
-EFFORT                 = -Os
-KYBER_STRENGTH         = 512 (KYBER_K=2)
-KYBER_SYM              = 90s
-TURBOSHAKE             = 0
-XOF                    = AES-256-CTR
-PRF                    = AES-256-CTR
-hash_h                 = SHA-256
-hash_g                 = SHA-512
-KDF                    = SHA-256
-AES                    = 256
-ZBKB                   = 1
-AES_ASM                = 0
-SHA256_ZKNH            = 0
-SHA512_ZKNH            = 0
-KYBER_ISE              = 0
-ASCON_ISE              = 0
-CUSTOM_BINUTILS_PREFIX = 
-ROM_SIZE               = 256k
-RAM_SIZE               = 64k
-KYBER_PARAM_DEFS       = -DKYBER_K=2
-SYM_DEFS               = -DKYBER_90S=1
-IMPL_DEFS              = -DTC_AES_256=1 -DRVKINTRIN_ASSEMBLER=1
-APP_DEFS               = -DKYBER_K=2 -DKYBER_90S=1 -DTC_AES_256=1 -DRVKINTRIN_ASSEMBLER=1
-APP_SRC_COUNT          = 18
--------------------------------- Results 1 ----------------------------------------------
-./neorv32_kyber_tb.vhd:398:11:@290236410ns:(report note): Kyber execution summary:
-./neorv32_kyber_tb.vhd:399:11:@290236410ns:(report note):   keypair_cycles=4138225
-./neorv32_kyber_tb.vhd:400:11:@290236410ns:(report note):   enc_cycles=6505123
-./neorv32_kyber_tb.vhd:401:11:@290236410ns:(report note):   dec_cycles=3809813
-./neorv32_kyber_tb.vhd:402:11:@290236410ns:(report note):   compare_cycles=1114
-./neorv32_kyber_tb.vhd:403:11:@290236410ns:(report note):   total_cycles=14454390
-./neorv32_kyber_tb.vhd:405:11:@290236410ns:(report note):   keypair_cpi=6.744393559112096
-./neorv32_kyber_tb.vhd:406:11:@290236410ns:(report note):   enc_cpi=8.185983796966273
-./neorv32_kyber_tb.vhd:407:11:@290236410ns:(report note):   dec_cpi=4.265452949520757
-./neorv32_kyber_tb.vhd:408:11:@290236410ns:(report note):   compare_cpi=4.720338983050848
-./neorv32_kyber_tb.vhd:409:11:@290236410ns:(report note):   total_cpi=5.1622821428571426e5
-./neorv32_kyber_tb.vhd:412:13:@290236410ns:(report note): Kyber finished successfully: GPIO0=1
+Kyber-512 NEORV32 parallel testbench results
+Generated: 2026-08-19T16:48:44-03:00
+
+[Resumo]
+config                           text     vhd      cycles       instructions      
+fips202_none                     12468    12468    13608031     3381084           
+fips202_zbkb                     12076    12076    12038307     2582470           
+fips202_zbkb_zkne_zknh           10424    10424    11254608     2565268           
+90s_none                         14400    14400    10122993     2532093           
+90s_zbkb                         14188    14192    14454390     2301689           
+90s_zbkb_zkne_zknh               12008    12008    7979071      1659697           
+
+============================================================
+CONFIG: KYBER_LEVEL=512 KYBER_VARIANT=fips202 KYBER_ISE_EXT=none
+============================================================
+
+[BUILD SUMMARY]
+Memory utilization:
+   text	   data	    bss	    dec	    hex	filename
+  12468	      0	    520	  12988	   32bc	/tmp/kyber_parallel_20260819_161933/fips202_none/main.elf
+Generating /tmp/kyber_parallel_20260819_161933/fips202_none/neorv32_imem_image.vhd
+Executable (VHD): 12468 bytes
+
+[OBJDUMP EXTENSION MNEMONIC CHECK]
+Command: riscv-none-elf-objdump -d -S -z /tmp/kyber_parallel_20260819_161933/fips202_none/main.elf
+
+Zbkb/Zbb style mnemonics found:
+  none
+
+Zkne AES mnemonics found:
+  none
+
+Zknh SHA mnemonics found:
+  none
+
+
+[TESTBENCH FINAL OUTPUT]
+./neorv32_kyber_tb.vhd:432:11:@272903570ns:(report note): Kyber execution summary:
+./neorv32_kyber_tb.vhd:433:11:@272903570ns:(report note):   keypair_cycles=3663761
+./neorv32_kyber_tb.vhd:434:11:@272903570ns:(report note):   enc_cycles=4605553
+./neorv32_kyber_tb.vhd:435:11:@272903570ns:(report note):   dec_cycles=5337488
+./neorv32_kyber_tb.vhd:436:11:@272903570ns:(report note):   compare_cycles=1114
+./neorv32_kyber_tb.vhd:437:11:@272903570ns:(report note):   total_cycles=13608031
+./neorv32_kyber_tb.vhd:438:11:@272903570ns:(report note):   keypair_instructions=946182
+./neorv32_kyber_tb.vhd:439:11:@272903570ns:(report note):   enc_instructions=1220042
+./neorv32_kyber_tb.vhd:440:11:@272903570ns:(report note):   dec_instructions=1214596
+./neorv32_kyber_tb.vhd:441:11:@272903570ns:(report note):   compare_instructions=236
+./neorv32_kyber_tb.vhd:442:11:@272903570ns:(report note):   total_instructions=3381084
+./neorv32_kyber_tb.vhd:443:11:@272903570ns:(report note):   keypair_cpi=3.872152503429573
+./neorv32_kyber_tb.vhd:444:11:@272903570ns:(report note):   enc_cpi=3.774913486584888
+./neorv32_kyber_tb.vhd:445:11:@272903570ns:(report note):   dec_cpi=4.394455440327484
+./neorv32_kyber_tb.vhd:446:11:@272903570ns:(report note):   compare_cpi=4.720338983050848
+./neorv32_kyber_tb.vhd:447:11:@272903570ns:(report note):   total_cpi=4.024753895496238
+./neorv32_kyber_tb.vhd:450:13:@272903570ns:(report note): Kyber finished successfully: GPIO0=1
+simulation stopped @272903570ns
+[SIMULATION STATUS] success
+
+============================================================
+CONFIG: KYBER_LEVEL=512 KYBER_VARIANT=fips202 KYBER_ISE_EXT=zbkb
+============================================================
+
+[BUILD SUMMARY]
+Memory utilization:
+   text	   data	    bss	    dec	    hex	filename
+  12076	      0	    520	  12596	   3134	/tmp/kyber_parallel_20260819_161933/fips202_zbkb/main.elf
+Generating /tmp/kyber_parallel_20260819_161933/fips202_zbkb/neorv32_imem_image.vhd
+Executable (VHD): 12076 bytes
+
+[OBJDUMP EXTENSION MNEMONIC CHECK]
+Command: riscv-none-elf-objdump -d -S -z /tmp/kyber_parallel_20260819_161933/fips202_zbkb/main.elf
+
+Zbkb/Zbb style mnemonics found:
+  10 andn
+  1 pack
+  64 rori
+  2 unzip
+  2 zip
+
+Zkne AES mnemonics found:
+  none
+
+Zknh SHA mnemonics found:
+  none
+
+
+[TESTBENCH FINAL OUTPUT]
+./neorv32_kyber_tb.vhd:432:11:@241488930ns:(report note): Kyber execution summary:
+./neorv32_kyber_tb.vhd:433:11:@241488930ns:(report note):   keypair_cycles=3123310
+./neorv32_kyber_tb.vhd:434:11:@241488930ns:(report note):   enc_cycles=3916127
+./neorv32_kyber_tb.vhd:435:11:@241488930ns:(report note):   dec_cycles=4997641
+./neorv32_kyber_tb.vhd:436:11:@241488930ns:(report note):   compare_cycles=1114
+./neorv32_kyber_tb.vhd:437:11:@241488930ns:(report note):   total_cycles=12038307
+./neorv32_kyber_tb.vhd:438:11:@241488930ns:(report note):   keypair_instructions=699501
+./neorv32_kyber_tb.vhd:439:11:@241488930ns:(report note):   enc_instructions=911730
+./neorv32_kyber_tb.vhd:440:11:@241488930ns:(report note):   dec_instructions=970975
+./neorv32_kyber_tb.vhd:441:11:@241488930ns:(report note):   compare_instructions=236
+./neorv32_kyber_tb.vhd:442:11:@241488930ns:(report note):   total_instructions=2582470
+./neorv32_kyber_tb.vhd:443:11:@241488930ns:(report note):   keypair_cpi=4.465054374475519
+./neorv32_kyber_tb.vhd:444:11:@241488930ns:(report note):   enc_cpi=4.295270529652419
+./neorv32_kyber_tb.vhd:445:11:@241488930ns:(report note):   dec_cpi=5.147033651741806
+./neorv32_kyber_tb.vhd:446:11:@241488930ns:(report note):   compare_cpi=4.720338983050848
+./neorv32_kyber_tb.vhd:447:11:@241488930ns:(report note):   total_cpi=4.661547665606958
+./neorv32_kyber_tb.vhd:450:13:@241488930ns:(report note): Kyber finished successfully: GPIO0=1
+simulation stopped @241488930ns
+[SIMULATION STATUS] success
+
+============================================================
+CONFIG: KYBER_LEVEL=512 KYBER_VARIANT=fips202 KYBER_ISE_EXT=zbkb,zkne,zknh
+============================================================
+
+[BUILD SUMMARY]
+Memory utilization:
+   text	   data	    bss	    dec	    hex	filename
+  10424	      0	    520	  10944	   2ac0	/tmp/kyber_parallel_20260819_161933/fips202_zbkb_zkne_zknh/main.elf
+Generating /tmp/kyber_parallel_20260819_161933/fips202_zbkb_zkne_zknh/neorv32_imem_image.vhd
+Executable (VHD): 10424 bytes
+
+[OBJDUMP EXTENSION MNEMONIC CHECK]
+Command: riscv-none-elf-objdump -d -S -z /tmp/kyber_parallel_20260819_161933/fips202_zbkb_zkne_zknh/main.elf
+
+Zbkb/Zbb style mnemonics found:
+  10 andn
+  1 pack
+  52 rori
+  2 unzip
+  2 zip
+
+Zkne AES mnemonics found:
+  24 aes32esi
+  32 aes32esmi
+
+Zknh SHA mnemonics found:
+  none
+
+
+[TESTBENCH FINAL OUTPUT]
+./neorv32_kyber_tb.vhd:432:11:@225588210ns:(report note): Kyber execution summary:
+./neorv32_kyber_tb.vhd:433:11:@225588210ns:(report note):   keypair_cycles=3073540
+./neorv32_kyber_tb.vhd:434:11:@225588210ns:(report note):   enc_cycles=3622866
+./neorv32_kyber_tb.vhd:435:11:@225588210ns:(report note):   dec_cycles=4556977
+./neorv32_kyber_tb.vhd:436:11:@225588210ns:(report note):   compare_cycles=1110
+./neorv32_kyber_tb.vhd:437:11:@225588210ns:(report note):   total_cycles=11254608
+./neorv32_kyber_tb.vhd:438:11:@225588210ns:(report note):   keypair_instructions=688033
+./neorv32_kyber_tb.vhd:439:11:@225588210ns:(report note):   enc_instructions=905996
+./neorv32_kyber_tb.vhd:440:11:@225588210ns:(report note):   dec_instructions=970975
+./neorv32_kyber_tb.vhd:441:11:@225588210ns:(report note):   compare_instructions=236
+./neorv32_kyber_tb.vhd:442:11:@225588210ns:(report note):   total_instructions=2565268
+./neorv32_kyber_tb.vhd:443:11:@225588210ns:(report note):   keypair_cpi=4.467140384254825
+./neorv32_kyber_tb.vhd:444:11:@225588210ns:(report note):   enc_cpi=3.9987659989668827
+./neorv32_kyber_tb.vhd:445:11:@225588210ns:(report note):   dec_cpi=4.693197044208142
+./neorv32_kyber_tb.vhd:446:11:@225588210ns:(report note):   compare_cpi=4.703389830508475
+./neorv32_kyber_tb.vhd:447:11:@225588210ns:(report note):   total_cpi=4.387303003039059
+./neorv32_kyber_tb.vhd:450:13:@225588210ns:(report note): Kyber finished successfully: GPIO0=1
+simulation stopped @225588210ns
+[SIMULATION STATUS] success
+
+============================================================
+CONFIG: KYBER_LEVEL=512 KYBER_VARIANT=90s KYBER_ISE_EXT=none
+============================================================
+
+[BUILD SUMMARY]
+Memory utilization:
+   text	   data	    bss	    dec	    hex	filename
+  14400	      0	    520	  14920	   3a48	/tmp/kyber_parallel_20260819_161933/90s_none/main.elf
+Generating /tmp/kyber_parallel_20260819_161933/90s_none/neorv32_imem_image.vhd
+Executable (VHD): 14400 bytes
+
+[OBJDUMP EXTENSION MNEMONIC CHECK]
+Command: riscv-none-elf-objdump -d -S -z /tmp/kyber_parallel_20260819_161933/90s_none/main.elf
+
+Zbkb/Zbb style mnemonics found:
+  none
+
+Zkne AES mnemonics found:
+  none
+
+Zknh SHA mnemonics found:
+  none
+
+
+[TESTBENCH FINAL OUTPUT]
+./neorv32_kyber_tb.vhd:432:11:@203629330ns:(report note): Kyber execution summary:
+./neorv32_kyber_tb.vhd:433:11:@203629330ns:(report note):   keypair_cycles=2747875
+./neorv32_kyber_tb.vhd:434:11:@203629330ns:(report note):   enc_cycles=3749216
+./neorv32_kyber_tb.vhd:435:11:@203629330ns:(report note):   dec_cycles=3624673
+./neorv32_kyber_tb.vhd:436:11:@203629330ns:(report note):   compare_cycles=1114
+./neorv32_kyber_tb.vhd:437:11:@203629330ns:(report note):   total_cycles=10122993
+./neorv32_kyber_tb.vhd:438:11:@203629330ns:(report note):   keypair_instructions=684414
+./neorv32_kyber_tb.vhd:439:11:@203629330ns:(report note):   enc_instructions=883950
+./neorv32_kyber_tb.vhd:440:11:@203629330ns:(report note):   dec_instructions=963465
+./neorv32_kyber_tb.vhd:441:11:@203629330ns:(report note):   compare_instructions=236
+./neorv32_kyber_tb.vhd:442:11:@203629330ns:(report note):   total_instructions=2532093
+./neorv32_kyber_tb.vhd:443:11:@203629330ns:(report note):   keypair_cpi=4.0149310212824405
+./neorv32_kyber_tb.vhd:444:11:@203629330ns:(report note):   enc_cpi=4.241434470275468
+./neorv32_kyber_tb.vhd:445:11:@203629330ns:(report note):   dec_cpi=3.762122132096132
+./neorv32_kyber_tb.vhd:446:11:@203629330ns:(report note):   compare_cpi=4.720338983050848
+./neorv32_kyber_tb.vhd:447:11:@203629330ns:(report note):   total_cpi=3.997875670443384
+./neorv32_kyber_tb.vhd:450:13:@203629330ns:(report note): Kyber finished successfully: GPIO0=1
+simulation stopped @203629330ns
+[SIMULATION STATUS] success
+
+============================================================
+CONFIG: KYBER_LEVEL=512 KYBER_VARIANT=90s KYBER_ISE_EXT=zbkb
+============================================================
+
+[BUILD SUMMARY]
+Memory utilization:
+   text	   data	    bss	    dec	    hex	filename
+  14188	      0	    520	  14708	   3974	/tmp/kyber_parallel_20260819_161933/90s_zbkb/main.elf
+Generating /tmp/kyber_parallel_20260819_161933/90s_zbkb/neorv32_imem_image.vhd
+Executable (VHD): 14192 bytes
+
+[OBJDUMP EXTENSION MNEMONIC CHECK]
+Command: riscv-none-elf-objdump -d -S -z /tmp/kyber_parallel_20260819_161933/90s_zbkb/main.elf
+
+Zbkb/Zbb style mnemonics found:
+  6 andn
+  8 rev8
+  28 rori
+
+Zkne AES mnemonics found:
+  none
+
+Zknh SHA mnemonics found:
+  none
+
+
+[TESTBENCH FINAL OUTPUT]
+./neorv32_kyber_tb.vhd:432:11:@290236410ns:(report note): Kyber execution summary:
+./neorv32_kyber_tb.vhd:433:11:@290236410ns:(report note):   keypair_cycles=4138225
+./neorv32_kyber_tb.vhd:434:11:@290236410ns:(report note):   enc_cycles=6505123
+./neorv32_kyber_tb.vhd:435:11:@290236410ns:(report note):   dec_cycles=3809813
+./neorv32_kyber_tb.vhd:436:11:@290236410ns:(report note):   compare_cycles=1114
+./neorv32_kyber_tb.vhd:437:11:@290236410ns:(report note):   total_cycles=14454390
+./neorv32_kyber_tb.vhd:438:11:@290236410ns:(report note):   keypair_instructions=613580
+./neorv32_kyber_tb.vhd:439:11:@290236410ns:(report note):   enc_instructions=794666
+./neorv32_kyber_tb.vhd:440:11:@290236410ns:(report note):   dec_instructions=893179
+./neorv32_kyber_tb.vhd:441:11:@290236410ns:(report note):   compare_instructions=236
+./neorv32_kyber_tb.vhd:442:11:@290236410ns:(report note):   total_instructions=2301689
+./neorv32_kyber_tb.vhd:443:11:@290236410ns:(report note):   keypair_cpi=6.744393559112096
+./neorv32_kyber_tb.vhd:444:11:@290236410ns:(report note):   enc_cpi=8.185983796966273
+./neorv32_kyber_tb.vhd:445:11:@290236410ns:(report note):   dec_cpi=4.265452949520757
+./neorv32_kyber_tb.vhd:446:11:@290236410ns:(report note):   compare_cpi=4.720338983050848
+./neorv32_kyber_tb.vhd:447:11:@290236410ns:(report note):   total_cpi=6.279905756164277
+./neorv32_kyber_tb.vhd:450:13:@290236410ns:(report note): Kyber finished successfully: GPIO0=1
 simulation stopped @290236410ns
-==============================================================================================
-								TESTE 2
-==============================================================================================
-------------------------------- Config 2 -----------------------------------------------------
-NEORV32_HOME            = ../../third_party/neorv32
-RISCV_CRYPTO_HOME      = ../../third_party/RISCV-crypto
-MARCH                  = rv32imc_zicsr_zifencei_zbkb_zbkc_zbkx_zkne_zknh
-MABI                   = ilp32
-EFFORT                 = -Os
-KYBER_STRENGTH         = 512 (KYBER_K=2)
-KYBER_SYM              = 90s
-TURBOSHAKE             = 0
-XOF                    = AES-256-CTR
-PRF                    = AES-256-CTR
-hash_h                 = SHA-256
-hash_g                 = SHA-512
-KDF                    = SHA-256
-AES                    = 256
-ZBKB                   = 1
-AES_ASM                = 1
-SHA256_ZKNH            = 1
-SHA512_ZKNH            = 1S
-KYBER_ISE              = 0
-ASCON_ISE              = 0
-CUSTOM_BINUTILS_PREFIX = 
-ROM_SIZE               = 256k
-RAM_SIZE               = 64k
-KYBER_PARAM_DEFS       = -DKYBER_K=2
-SYM_DEFS               = -DKYBER_90S=1
-IMPL_DEFS              = -DTC_AES_256=1 -DRVKINTRIN_ASSEMBLER=1 -DAES_RISCV_ASM=1 -DSHA256_ZKNH=1 -DSHA512_ZKNH=1
-APP_DEFS               = -DKYBER_K=2 -DKYBER_90S=1 -DTC_AES_256=1 -DRVKINTRIN_ASSEMBLER=1 -DAES_RISCV_ASM=1 -DSHA256_ZKNH=1 -DSHA512_ZKNH=1
-APP_SRC_COUNT          = 18
------------------------------------ Results 2 ---------------------------------------------------------------------------------------------
-./neorv32_kyber_tb.vhd:431:11:@160077670ns:(report note): Kyber execution summary:
-./neorv32_kyber_tb.vhd:432:11:@160077670ns:(report note):   keypair_cycles=1894644
-./neorv32_kyber_tb.vhd:433:11:@160077670ns:(report note):   enc_cycles=2439799
-./neorv32_kyber_tb.vhd:434:11:@160077670ns:(report note):   dec_cycles=3643399
-./neorv32_kyber_tb.vhd:435:11:@160077670ns:(report note):   compare_cycles=1114
-./neorv32_kyber_tb.vhd:436:11:@160077670ns:(report note):   total_cycles=7979071
-./neorv32_kyber_tb.vhd:437:11:@160077670ns:(report note):   keypair_instructions=399426
-./neorv32_kyber_tb.vhd:438:11:@160077670ns:(report note):   enc_instructions=571594
-./neorv32_kyber_tb.vhd:439:11:@160077670ns:(report note):   dec_instructions=688413
-./neorv32_kyber_tb.vhd:440:11:@160077670ns:(report note):   compare_instructions=236
-./neorv32_kyber_tb.vhd:441:11:@160077670ns:(report note):   total_instructions=1659697
-./neorv32_kyber_tb.vhd:442:11:@160077670ns:(report note):   keypair_cpi=4.743416803112466
-./neorv32_kyber_tb.vhd:443:11:@160077670ns:(report note):   enc_cpi=4.268412544568347
-./neorv32_kyber_tb.vhd:444:11:@160077670ns:(report note):   dec_cpi=5.2924610662494755
-./neorv32_kyber_tb.vhd:445:11:@160077670ns:(report note):   compare_cpi=4.720338983050848
-./neorv32_kyber_tb.vhd:446:11:@160077670ns:(report note):   total_cpi=4.807546799204915
-./neorv32_kyber_tb.vhd:449:13:@160077670ns:(report note): Kyber finished successfully: GPIO0=1
+[SIMULATION STATUS] success
+
+============================================================
+CONFIG: KYBER_LEVEL=512 KYBER_VARIANT=90s KYBER_ISE_EXT=zbkb,zkne,zknh
+============================================================
+
+[BUILD SUMMARY]
+Memory utilization:
+   text	   data	    bss	    dec	    hex	filename
+  12008	      0	    520	  12528	   30f0	/tmp/kyber_parallel_20260819_161933/90s_zbkb_zkne_zknh/main.elf
+Generating /tmp/kyber_parallel_20260819_161933/90s_zbkb_zkne_zknh/neorv32_imem_image.vhd
+Executable (VHD): 12008 bytes
+
+[OBJDUMP EXTENSION MNEMONIC CHECK]
+Command: riscv-none-elf-objdump -d -S -z /tmp/kyber_parallel_20260819_161933/90s_zbkb_zkne_zknh/main.elf
+
+Zbkb/Zbb style mnemonics found:
+  6 andn
+  8 rev8
+
+Zkne AES mnemonics found:
+  24 aes32esi
+  32 aes32esmi
+
+Zknh SHA mnemonics found:
+  1 sha256sig0
+  1 sha256sig1
+  2 sha256sum0
+  2 sha256sum1
+  1 sha512sig0h
+  1 sha512sig0l
+  1 sha512sig1h
+  1 sha512sig1l
+  4 sha512sum0r
+  4 sha512sum1r
+
+
+[TESTBENCH FINAL OUTPUT]
+./neorv32_kyber_tb.vhd:432:11:@160077670ns:(report note): Kyber execution summary:
+./neorv32_kyber_tb.vhd:433:11:@160077670ns:(report note):   keypair_cycles=1894644
+./neorv32_kyber_tb.vhd:434:11:@160077670ns:(report note):   enc_cycles=2439799
+./neorv32_kyber_tb.vhd:435:11:@160077670ns:(report note):   dec_cycles=3643399
+./neorv32_kyber_tb.vhd:436:11:@160077670ns:(report note):   compare_cycles=1114
+./neorv32_kyber_tb.vhd:437:11:@160077670ns:(report note):   total_cycles=7979071
+./neorv32_kyber_tb.vhd:438:11:@160077670ns:(report note):   keypair_instructions=399426
+./neorv32_kyber_tb.vhd:439:11:@160077670ns:(report note):   enc_instructions=571594
+./neorv32_kyber_tb.vhd:440:11:@160077670ns:(report note):   dec_instructions=688413
+./neorv32_kyber_tb.vhd:441:11:@160077670ns:(report note):   compare_instructions=236
+./neorv32_kyber_tb.vhd:442:11:@160077670ns:(report note):   total_instructions=1659697
+./neorv32_kyber_tb.vhd:443:11:@160077670ns:(report note):   keypair_cpi=4.743416803112466
+./neorv32_kyber_tb.vhd:444:11:@160077670ns:(report note):   enc_cpi=4.268412544568347
+./neorv32_kyber_tb.vhd:445:11:@160077670ns:(report note):   dec_cpi=5.2924610662494755
+./neorv32_kyber_tb.vhd:446:11:@160077670ns:(report note):   compare_cpi=4.720338983050848
+./neorv32_kyber_tb.vhd:447:11:@160077670ns:(report note):   total_cpi=4.807546799204915
+./neorv32_kyber_tb.vhd:450:13:@160077670ns:(report note): Kyber finished successfully: GPIO0=1
 simulation stopped @160077670ns
-
-==============================================================================================
-								TESTE 3
-==============================================================================================
-------------------------------- Config 3 -----------------------------------------------------
-make config KYBER_SYM=TURBOSHAKE ZBKB=0
-NEORV32_HOME            = ../../third_party/neorv32
-RISCV_CRYPTO_HOME      = ../../third_party/RISCV-crypto
-MARCH                  = rv32imc_zicsr_zifencei_zbkb_zbkc_zbkx_zkne_zknh
-MABI                   = ilp32
-EFFORT                 = -Os
-KYBER_STRENGTH         = 512 (KYBER_K=2)
-KYBER_SYM              = turboshake
-TURBOSHAKE             = 1
-XOF                    = TurboSHAKE128
-PRF                    = TurboSHAKE256
-hash_h                 = TurboSHAKE256/32
-hash_g                 = TurboSHAKE256/64
-KDF                    = TurboSHAKE256
-AES                    = 256
-ZBKB                   = 0
-AES_ASM                = 0
-SHA256_ZKNH            = 0
-SHA512_ZKNH            = 0
-KYBER_ISE              = 0
-ASCON_ISE              = 0
-CUSTOM_BINUTILS_PREFIX = 
-ROM_SIZE               = 256k
-RAM_SIZE               = 64k
-KYBER_PARAM_DEFS       = -DKYBER_K=2
-SYM_DEFS               = -DTURBOSHAKE=1
-IMPL_DEFS              = -DTC_AES_256=1 -DRVKINTRIN_EMULATE=1
-APP_DEFS               = -DKYBER_K=2 -DTURBOSHAKE=1 -DTC_AES_256=1 -DRVKINTRIN_EMULATE=1
-APP_SRC_COUNT          = 17
------------------------------------ Results 3 ---------------------------------------------------------------------------------------------
-./neorv32_kyber_tb.vhd:431:11:@212436410ns:(report note): Kyber execution summary:
-./neorv32_kyber_tb.vhd:432:11:@212436410ns:(report note):   keypair_cycles=2690216
-./neorv32_kyber_tb.vhd:433:11:@212436410ns:(report note):   enc_cycles=3371657
-./neorv32_kyber_tb.vhd:434:11:@212436410ns:(report note):   dec_cycles=4522937
-./neorv32_kyber_tb.vhd:435:11:@212436410ns:(report note):   compare_cycles=1110
-./neorv32_kyber_tb.vhd:436:11:@212436410ns:(report note):   total_cycles=10586035
-./neorv32_kyber_tb.vhd:437:11:@212436410ns:(report note):   keypair_instructions=656633
-./neorv32_kyber_tb.vhd:438:11:@212436410ns:(report note):   enc_instructions=857903
-./neorv32_kyber_tb.vhd:439:11:@212436410ns:(report note):   dec_instructions=928167
-./neorv32_kyber_tb.vhd:440:11:@212436410ns:(report note):   compare_instructions=236
-./neorv32_kyber_tb.vhd:441:11:@212436410ns:(report note):   total_instructions=2442967
-./neorv32_kyber_tb.vhd:442:11:@212436410ns:(report note):   keypair_cpi=4.096985683022328
-./neorv32_kyber_tb.vhd:443:11:@212436410ns:(report note):   enc_cpi=3.930114476811481
-./neorv32_kyber_tb.vhd:444:11:@212436410ns:(report note):   dec_cpi=4.872977599936219
-./neorv32_kyber_tb.vhd:445:11:@212436410ns:(report note):   compare_cpi=4.703389830508475
-./neorv32_kyber_tb.vhd:446:11:@212436410ns:(report note):   total_cpi=4.333269749448109
-./neorv32_kyber_tb.vhd:449:13:@212436410ns:(report note): Kyber finished successfully: GPIO0=1
-simulation stopped @212436410ns
-
-==============================================================================================
-								TESTE 4
-==============================================================================================
-------------------------------- Config 4 -----------------------------------------------------
-
-NEORV32_HOME            = ../../third_party/neorv32
-RISCV_CRYPTO_HOME      = ../../third_party/RISCV-crypto
-MARCH                  = rv32imc_zicsr_zifencei_zbkb_zbkc_zbkx_zkne_zknh
-MABI                   = ilp32
-EFFORT                 = -Os
-KYBER_STRENGTH         = 512 (KYBER_K=2)
-KYBER_SYM              = turboshake
-TURBOSHAKE             = 1
-XOF                    = TurboSHAKE128
-PRF                    = TurboSHAKE256
-hash_h                 = TurboSHAKE256/32
-hash_g                 = TurboSHAKE256/64
-KDF                    = TurboSHAKE256
-AES                    = 256
-ZBKB                   = 1
-AES_ASM                = 0
-SHA256_ZKNH            = 0
-SHA512_ZKNH            = 0
-KYBER_ISE              = 0
-ASCON_ISE              = 0
-CUSTOM_BINUTILS_PREFIX = 
-ROM_SIZE               = 256k
-RAM_SIZE               = 64k
-KYBER_PARAM_DEFS       = -DKYBER_K=2
-SYM_DEFS               = -DTURBOSHAKE=1
-IMPL_DEFS              = -DTC_AES_256=1 -DRVKINTRIN_ASSEMBLER=1
-APP_DEFS               = -DKYBER_K=2 -DTURBOSHAKE=1 -DTC_AES_256=1 -DRVKINTRIN_ASSEMBLER=1
-APP_SRC_COUNT          = 16
-
------------------------------------ Results 4 ---------------------------------------------------------------------------------------------
-./neorv32_kyber_tb.vhd:431:11:@193511410ns:(report note): Kyber execution summary:
-./neorv32_kyber_tb.vhd:432:11:@193511410ns:(report note):   keypair_cycles=2399836
-./neorv32_kyber_tb.vhd:433:11:@193511410ns:(report note):   enc_cycles=3005858
-./neorv32_kyber_tb.vhd:434:11:@193511410ns:(report note):   dec_cycles=4232041
-./neorv32_kyber_tb.vhd:435:11:@193511410ns:(report note):   compare_cycles=1114
-./neorv32_kyber_tb.vhd:436:11:@193511410ns:(report note):   total_cycles=9638964
-./neorv32_kyber_tb.vhd:437:11:@193511410ns:(report note):   keypair_instructions=525689
-./neorv32_kyber_tb.vhd:438:11:@193511410ns:(report note):   enc_instructions=692965
-./neorv32_kyber_tb.vhd:439:11:@193511410ns:(report note):   dec_instructions=797163
-./neorv32_kyber_tb.vhd:440:11:@193511410ns:(report note):   compare_instructions=236
-./neorv32_kyber_tb.vhd:441:11:@193511410ns:(report note):   total_instructions=2016081
-./neorv32_kyber_tb.vhd:442:11:@193511410ns:(report note):   keypair_cpi=4.565125007371279
-./neorv32_kyber_tb.vhd:443:11:@193511410ns:(report note):   enc_cpi=4.337676506028443
-./neorv32_kyber_tb.vhd:444:11:@193511410ns:(report note):   dec_cpi=5.308877858104302
-./neorv32_kyber_tb.vhd:445:11:@193511410ns:(report note):   compare_cpi=4.720338983050848
-./neorv32_kyber_tb.vhd:446:11:@193511410ns:(report note):   total_cpi=4.781040047498092
-./neorv32_kyber_tb.vhd:449:13:@193511410ns:(report note): Kyber finished successfully: GPIO0=1
-simulation stopped @193511410ns
-
-==============================================================================================
-								TESTE 5
-==============================================================================================
-------------------------------- Config 5 -----------------------------------------------------
-NEORV32_HOME            = ../../third_party/neorv32
-RISCV_CRYPTO_HOME      = ../../third_party/RISCV-crypto
-MARCH                  = rv32imc_zicsr_zifencei_zbkb_zbkc_zbkx_zkne_zknh
-MABI                   = ilp32
-EFFORT                 = -Os
-KYBER_STRENGTH         = 512 (KYBER_K=2)
-KYBER_SYM              = turboshake
-TURBOSHAKE             = 1
-XOF                    = TurboSHAKE128
-PRF                    = TurboSHAKE256
-hash_h                 = TurboSHAKE256/32
-hash_g                 = TurboSHAKE256/64
-KDF                    = TurboSHAKE256
-AES                    = 256
-ZBKB                   = 1
-AES_ASM                = 1
-SHA256_ZKNH            = 1
-SHA512_ZKNH            = 1
-KYBER_ISE              = 0
-ASCON_ISE              = 0
-CUSTOM_BINUTILS_PREFIX = 
-ROM_SIZE               = 256k
-RAM_SIZE               = 64k
-KYBER_PARAM_DEFS       = -DKYBER_K=2
-SYM_DEFS               = -DTURBOSHAKE=1
-IMPL_DEFS              = -DTC_AES_256=1 -DRVKINTRIN_ASSEMBLER=1 -DAES_RISCV_ASM=1 -DSHA256_ZKNH=1 -DSHA512_ZKNH=1
-APP_DEFS               = -DKYBER_K=2 -DTURBOSHAKE=1 -DTC_AES_256=1 -DRVKINTRIN_ASSEMBLER=1 -DAES_RISCV_ASM=1 -DSHA256_ZKNH=1 -DSHA512_ZKNH=1
-APP_SRC_COUNT          = 16
-
-------------------------------- Results 5  -----------------------------------------------------
-./neorv32_kyber_tb.vhd:431:11:@179634250ns:(report note): Kyber execution summary:
-./neorv32_kyber_tb.vhd:432:11:@179634250ns:(report note):   keypair_cycles=2377125
-./neorv32_kyber_tb.vhd:433:11:@179634250ns:(report note):   enc_cycles=2724677
-./neorv32_kyber_tb.vhd:434:11:@179634250ns:(report note):   dec_cycles=3853883
-./neorv32_kyber_tb.vhd:435:11:@179634250ns:(report note):   compare_cycles=1110
-./neorv32_kyber_tb.vhd:436:11:@179634250ns:(report note):   total_cycles=8956910
-./neorv32_kyber_tb.vhd:437:11:@179634250ns:(report note):   keypair_instructions=514221
-./neorv32_kyber_tb.vhd:438:11:@179634250ns:(report note):   enc_instructions=687231
-./neorv32_kyber_tb.vhd:439:11:@179634250ns:(report note):   dec_instructions=797163
-./neorv32_kyber_tb.vhd:440:11:@179634250ns:(report note):   compare_instructions=236
-./neorv32_kyber_tb.vhd:441:11:@179634250ns:(report note):   total_instructions=1998879
-./neorv32_kyber_tb.vhd:442:11:@179634250ns:(report note):   keypair_cpi=4.622769198457473
-./neorv32_kyber_tb.vhd:443:11:@179634250ns:(report note):   enc_cpi=3.964717831413309
-./neorv32_kyber_tb.vhd:444:11:@179634250ns:(report note):   dec_cpi=4.8344980888475755
-./neorv32_kyber_tb.vhd:445:11:@179634250ns:(report note):   compare_cpi=4.703389830508475
-./neorv32_kyber_tb.vhd:446:11:@179634250ns:(report note):   total_cpi=4.480966581769081
-./neorv32_kyber_tb.vhd:449:13:@179634250ns:(report note): Kyber finished successfully: GPIO0=1
-simulation stopped @179634250ns
-
+[SIMULATION STATUS] success

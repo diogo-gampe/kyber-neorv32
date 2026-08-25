@@ -1,17 +1,15 @@
-# NEORV32 application Makefile for the RISCV-crypto Kyber reference code.
+# NEORV32 Makefile para código de referência RISCV-crypto
 #
-# Public configuration:
+# Configurações públicas:
 #   KYBER_LEVEL    = 512 | 768 | 1024
 #   KYBER_VARIANT  = fips202 | 90s
-#   KYBER_ISE_EXT  = none | zbkb | zkne | zknh | comma/space-separated list
+#   KYBER_ISE_EXT  = none | zbkb | zkne | zknh 
 #
-# Examples:
+# Examplo:
 #   make image
 #   make image KYBER_LEVEL=768 KYBER_VARIANT=90s
 #   make image KYBER_LEVEL=1024 KYBER_VARIANT=fips202 KYBER_ISE_EXT=zbkb,zknh
 #
-# Custom Kyber/ASCON ISEs from third_party/RISCV-crypto are intentionally not
-# exposed here. Only ratified scalar RISC-V crypto extensions are selected.
 
 NEORV32_HOME ?= ../../third_party/neorv32
 RISCV_CRYPTO_HOME ?= ../../third_party/RISCV-crypto

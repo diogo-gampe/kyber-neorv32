@@ -10,6 +10,13 @@ RTL_FILES := $(shell sed \
 	-e "s|$(NEORV32_HOME)/rtl/core/neorv32_imem_image.vhd|$(IMEM_IMAGE)|g" \
 	$(FILE_LIST))
 TOP_FILE ?= neorv32_kyber_tb
+VCD ?= 0
+
+ifeq ($(VCD),1)
+  GHDL_VCD_FLAG := --vcd=wave.vcd
+else
+  GHDL_VCD_FLAG :=
+endif
 
 .PHONY: all image analyze elaborate run clean
 
@@ -36,7 +43,7 @@ elaborate: analyze
 
 run: elaborate
 	@echo "Running simulation with top-level: $(TOP_FILE)"
-	@ghdl -r --std=08 --work=neorv32 --workdir=$(BUILD_DIR) $(TOP_FILE) --vcd=wave.vcd
+	@ghdl -r --std=08 --work=neorv32 --workdir=$(BUILD_DIR) $(TOP_FILE) $(GHDL_VCD_FLAG)
 clean:
 	@ghdl --clean --work=neorv32 --workdir=$(BUILD_DIR)
 	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/*.cf wave.vcd

@@ -42,8 +42,8 @@ int main(void) {
   for (unsigned int i = 0; i < sizeof(entropy); i++) {
     entropy[i] = (uint8_t)i;
   }
- neorv32_gpio_port_set(KYBER_GPIO_ENTROPY_READY);
-
+ 
+  neorv32_gpio_port_set(KYBER_GPIO_ENTROPY_READY);
   randombytes_init(entropy, 0, 256);
   neorv32_gpio_port_set(KYBER_GPIO_RNG_READY);
 

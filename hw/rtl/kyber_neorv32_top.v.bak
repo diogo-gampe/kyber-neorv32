@@ -27,7 +27,7 @@ module kyber_neorv32_top(
       output   [ 6: 0]   HEX3,
       output   [ 6: 0]   HEX4,
       output   [ 6: 0]   HEX5,
-		
+
      ///////// SDRAM ////////////
       output             DRAM_CLK,
       output             DRAM_CKE,
@@ -197,16 +197,12 @@ neorv32_top #(
 
    .CLOCK_FREQUENCY(50000000),
 	.IMEM_SIZE(16*1024), 
-	.DMEM_SIZE(8*1024),
-	.IO_UART0_EN("true"),
-	.IO_GPIO_NUM(8)
-	)
+	.DMEM_SIZE(8*1024)
+ ) 
  softcore (
 	
 	.clk_i(fpga_clk_50),
 	.rstn_i(hps_fpga_reset_n),
-	.uart0_txd_o(GPIO[1]), //UART TX - output
-   .uart0_rxd_i(GPIO[0]), //UART RX - input
 	.gpio_o(LEDR[7:0])
 );
 
