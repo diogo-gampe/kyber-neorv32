@@ -178,7 +178,7 @@ module kyber_neorv32_top(
 //  REG/WIRE declarations
 //=======================================================
 
-  wire  hps_fpga_reset_n = 1'b1;
+  wire  hps_fpga_reset_n = KEY[0];
   wire [3:0] fpga_debounced_buttons;
   wire [8:0]  fpga_led_internal;
   wire [2:0]  hps_reset_req;
@@ -193,6 +193,9 @@ module kyber_neorv32_top(
   assign fpga_clk_50=CLOCK_50;
   
 
+  assign LEDR[9] = hps_fpga_reset_n;
+  assign LEDR[8] = led_level;
+  
 neorv32_top #(
 
    .CLOCK_FREQUENCY(50000000),
@@ -206,8 +209,17 @@ neorv32_top #(
    .DMEM_EN("true"),
    .DMEM_BASE(32'h80000000),
 	
-	.IMEM_SIZE(16*1024), 
-	.DMEM_SIZE(8*1024),
+	.IMEM_SIZE(64*1024), 
+	.DMEM_SIZE(64*1024),
+	
+	.CPU_FAST_MUL_EN("true"),
+	.CPU_FAST_SHIFT_EN("true"),
+   .ICACHE_EN("true"),
+   .DCACHE_EN("true"),
+   .ICACHE_NUM_BLOCKS(16),
+   .DCACHE_NUM_BLOCKS(16),
+   .CACHE_BLOCK_SIZE(1024),
+
 	
 	.IO_UART0_EN("true"),
    .IO_UART0_RX_FIFO(1),
@@ -229,6 +241,7 @@ neorv32_top #(
    .RISCV_ISA_Zknh("true"),
    .RISCV_ISA_Zksed("true"),
    .RISCV_ISA_Zksh("true"),
+	.RISCV_ISA_Zicntr("true"),
    .RISCV_ISA_Zmmul("true")
 	)
  softcore (

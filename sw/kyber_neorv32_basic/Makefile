@@ -39,11 +39,11 @@ HAS_ZKNH := $(if $(filter zknh Zknh ZKNH,$(KYBER_ISE_EXT_LIST)),1,0)
 # -----------------------------------------------------------------------------
 # NEORV32
 # -----------------------------------------------------------------------------
-ROM_SIZE ?= 256k
+ROM_SIZE ?= 64k
 RAM_SIZE ?= 64k
 
 #Seleciona arquitetura para compilador
-BASE_MARCH ?= rv32imc_zicsr_zifencei
+BASE_MARCH ?= rv32imc_zicsr_zicntr_zifencei
 STD_ISE_MARCH_SUFFIX := $(if $(filter 1,$(HAS_ZBKB)),_zbkb)$(if $(filter 1,$(HAS_ZKNE)),_zkne)$(if $(filter 1,$(HAS_ZKNH)),_zknh)
 MARCH ?= $(BASE_MARCH)$(STD_ISE_MARCH_SUFFIX)
 

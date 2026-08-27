@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSXFC6D6F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY kyber_ibex
+set_global_assignment -name TOP_LEVEL_ENTITY kyber_ibex_top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "18:24:24  AUGUST 25, 2026"
 set_global_assignment -name LAST_QUARTUS_VERSION "20.1.1 Lite Edition"
@@ -49,48 +49,110 @@ set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/sha2_unit.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_wb_stage.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_top.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_register_file_latch.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_register_file_fpga.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_register_file_ff.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_prefetch_buffer.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_pmp.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_pkg.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_multdiv_slow.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_multdiv_fast.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_lockstep.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_load_store_unit.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_if_stage.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_id_stage.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_icache.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_fetch_fifo.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_ex_block.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_dummy_instr.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_decoder.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_csr.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_cs_registers.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_counter.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_core.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_controller.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_compressed_decoder.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_branch_predict.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto/ibex_alu.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/timer.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/ram_2p.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/ram_1p.sv"
+set_global_assignment -name VERILOG_MACRO SYNTHESIS=1
+set_global_assignment -name VERILOG_MACRO DV_FCOV_DISABLE=1
+set_global_assignment -name SEARCH_PATH "../../../hw/rtl/kyber_ibex"
+set_global_assignment -name SEARCH_PATH "../../../third_party/RISCV-crypto/src/rtl/util"
+set_global_assignment -name SEARCH_PATH "../../../third_party/RISCV-crypto/src/rtl/ibex-crypto-kyber"
+
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/prim_ram_1p_pkg.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/prim_ram_2p_pkg.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_pkg.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/syn/prim_buf.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/syn/prim_clock_gating.sv"
 set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/prim_secded_inv_39_32_enc.sv"
 set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/prim_secded_inv_39_32_dec.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/prim_ram_2p_pkg.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/prim_ram_1p_pkg.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/prim_onehot_check.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/prim_lfsr.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/prim_generic_ram_2p.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/prim_flop_macros.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/prim_assert.sv"
-set_global_assignment -name VERILOG_FILE ip/debounce/debounce.v
-set_global_assignment -name VERILOG_FILE ip/altsource_probe/hps_reset_bb.v
-set_global_assignment -name VERILOG_FILE ip/altsource_probe/hps_reset.v
-set_global_assignment -name VERILOG_FILE ip/edge_detect/altera_edge_detector.v
-set_global_assignment -name VERILOG_FILE ../../rtl/kyber_ibex/kyber_ibex.v
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../third_party/RISCV-crypto/src/rtl/util/bus.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/prim_onehot_check_stub.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/prim_ram_1p_stubs.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/aes_sbox.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/aes_unit.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/sha2_unit.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_alu.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_branch_predict.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_compressed_decoder.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_controller.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_counter.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_csr.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_cs_registers.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_decoder.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_dummy_instr.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_ex_block.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_fetch_fifo.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_icache.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_id_stage.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_if_stage.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_load_store_unit.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_lockstep.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_multdiv_fast.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_multdiv_slow.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_pmp.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_prefetch_buffer.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_register_file_ff.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_register_file_fpga.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_register_file_latch.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_wb_stage.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_core.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/ibex_quartus/ibex_top.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/kyber_ibex_ram_2p.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/kyber_ibex_timer.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/kyber_ibex_soc.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE "../../../hw/rtl/kyber_ibex/kyber_ibex_top.sv"
+
+# Minimal DE1-SoC pins used by kyber_ibex_top.
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK_50
+set_location_assignment PIN_AF14 -to CLOCK_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[3]
+set_location_assignment PIN_AJ4 -to KEY[0]
+set_location_assignment PIN_AK4 -to KEY[1]
+set_location_assignment PIN_AA14 -to KEY[2]
+set_location_assignment PIN_AA15 -to KEY[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SW[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SW[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SW[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SW[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SW[4]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SW[5]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SW[6]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SW[7]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SW[8]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SW[9]
+set_location_assignment PIN_AB30 -to SW[0]
+set_location_assignment PIN_Y27 -to SW[1]
+set_location_assignment PIN_AB28 -to SW[2]
+set_location_assignment PIN_AC30 -to SW[3]
+set_location_assignment PIN_W25 -to SW[4]
+set_location_assignment PIN_V25 -to SW[5]
+set_location_assignment PIN_AC28 -to SW[6]
+set_location_assignment PIN_AD30 -to SW[7]
+set_location_assignment PIN_AC29 -to SW[8]
+set_location_assignment PIN_AA30 -to SW[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[9]
+set_location_assignment PIN_AA24 -to LEDR[0]
+set_location_assignment PIN_AB23 -to LEDR[1]
+set_location_assignment PIN_AC23 -to LEDR[2]
+set_location_assignment PIN_AD24 -to LEDR[3]
+set_location_assignment PIN_AG25 -to LEDR[4]
+set_location_assignment PIN_AF25 -to LEDR[5]
+set_location_assignment PIN_AE24 -to LEDR[6]
+set_location_assignment PIN_AF24 -to LEDR[7]
+set_location_assignment PIN_AB22 -to LEDR[8]
+set_location_assignment PIN_AC22 -to LEDR[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO[1]
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -26,24 +26,28 @@ sw/**/neorv32_imem_image.vhd
 *.wlf
 transcript
 *.cf
+hw/*.log
 
 # Quartus generated artifacts
-hw/quartus/db/
-hw/quartus/incremental_db/
-hw/quartus/output_files/
-hw/quartus/*.bak
-hw/quartus/*.rpt
-hw/quartus/*.summary
-hw/quartus/*.done
-hw/quartus/*.sof
-hw/quartus/*.pof
-hw/quartus/*.jdi
-hw/quartus/*.sld
-hw/quartus/*.pin
-hw/quartus/*.qmsg
-hw/quartus/*.rdb
-hw/quartus/*.log
-hw/quartus/*.txt
+hw/quartus/*/.qsys_edit/
+hw/quartus/*/db/
+hw/quartus/*/incremental_db/
+hw/quartus/*/output_files/
+hw/quartus/**/*.bak
+hw/quartus/**/*.rpt
+hw/quartus/**/*.summary
+hw/quartus/**/*.done
+hw/quartus/**/*.sof
+hw/quartus/**/*.pof
+hw/quartus/**/*.jdi
+hw/quartus/**/*.sld
+hw/quartus/**/*.pin
+hw/quartus/**/*.qmsg
+hw/quartus/**/*.rdb
+hw/quartus/**/*.smsg
+hw/quartus/**/*.log
+hw/quartus/**/*.txt
+hw/quartus/**/*.qws
 
 # Editor / OS
 .vscode/
