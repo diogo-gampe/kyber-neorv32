@@ -1,0 +1,7 @@
+	component niosv_soc is
+		port (
+			clock_bridge_1_in_clk_clk     : in std_logic := 'X'; -- clk
+			reset_bridge_0_in_reset_reset : in std_logic := 'X'  -- reset
+		);
+	end component niosv_soc;
+
