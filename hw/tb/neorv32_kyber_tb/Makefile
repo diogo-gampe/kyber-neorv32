@@ -1,5 +1,5 @@
-NEORV32_HOME ?= ../../third_party/neorv32
-SW_APP_DIR ?= ../../sw/kyber_neorv32_basic
+NEORV32_HOME ?= ../../../third_party/neorv32
+SW_APP_DIR ?= ../../../sw/kyber_neorv32_basic
 IMEM_IMAGE ?= $(SW_APP_DIR)/neorv32_imem_image.vhd
 BUILD_DIR ?= ./build
 FILE_LIST := $(NEORV32_HOME)/rtl/file_list_soc.f
