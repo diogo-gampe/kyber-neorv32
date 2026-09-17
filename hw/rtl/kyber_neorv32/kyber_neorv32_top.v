@@ -242,7 +242,8 @@ neorv32_top #(
    .RISCV_ISA_Zksed("true"),
    .RISCV_ISA_Zksh("true"),
 	.RISCV_ISA_Zicntr("true"),
-   .RISCV_ISA_Zmmul("true")
+   .RISCV_ISA_Zmmul("true"),
+	.RISCV_ISA_Xcfu("true")
 	)
  softcore (
 	
