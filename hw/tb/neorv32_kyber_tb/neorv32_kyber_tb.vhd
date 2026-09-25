@@ -74,7 +74,7 @@ begin
     RISCV_ISA_Zbs       => true,
     RISCV_ISA_Zfinx     => false,
     RISCV_ISA_Zibi      => false,
-    RISCV_ISA_Zicntr    => false,
+    RISCV_ISA_Zicntr    => true,
     RISCV_ISA_Zicond    => false,
     RISCV_ISA_Zihpm     => false,
     RISCV_ISA_Zimop     => false,
