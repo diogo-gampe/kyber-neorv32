@@ -12,7 +12,7 @@ RTL_FILES_ORIG := $(shell sed \
 TOP_FILE ?= neorv32_pq_alu_ise_tb
 # Replace the original CFU; analyze PQ-ALU before its direct instantiation.
 PQ_RTL_DIR := ../../rtl/kyber_neorv32
-RTL_FILES := $(subst $(NEORV32_HOME)/rtl/core/neorv32_cpu_alu_cfu.vhd,$(PQ_RTL_DIR)/pq_alu.vhd $(PQ_RTL_DIR)/neorv32_cpu_alu_cfu.vhd,$(RTL_FILES_ORIG))
+RTL_FILES := $(subst $(NEORV32_HOME)/rtl/core/neorv32_cpu_alu_cfu.vhd, $(PQ_RTL_DIR)/fqmul.vhd $(PQ_RTL_DIR)/barret_reduce.vhd $(PQ_RTL_DIR)/pq_alu.vhd $(PQ_RTL_DIR)/neorv32_cpu_alu_cfu.vhd, $(RTL_FILES_ORIG))
 GHDL ?= ghdl
 GHDL_RUN_FLAGS ?=
 VCD ?= 0

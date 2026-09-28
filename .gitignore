@@ -49,6 +49,8 @@ hw/quartus/**/*.log
 hw/quartus/**/*.txt
 hw/quartus/**/*.qws
 
+hw/rtl/**/**.vhd.bak
+
 # Editor / OS
 .vscode/
 .idea/
