@@ -30,5 +30,5 @@ begin
   mont_uq         <= mont_u * KYBER_Q;
   mont_difference <= fq_product - mont_uq;
   mont_shifted    <= shift_right(mont_difference, 16);
-  fq_result       <= signed(mont_shifted(15 downto 0));
+  fq_result       <= mont_shifted(15 downto 0);
 end architecture rtl;

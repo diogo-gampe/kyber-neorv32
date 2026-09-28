@@ -46,8 +46,6 @@ architecture rtl of pq_alu is
   signal op_ntt         : std_ulogic;
   signal op_intt        : std_ulogic;
   signal op_supported  : std_ulogic;
-  signal reset         : std_ulogic;
-
   signal operand_a : signed(15 downto 0);
   signal operand_b : signed(15 downto 0);
   signal twiddle_q : signed(15 downto 0);
@@ -121,20 +119,18 @@ architecture rtl of pq_alu is
   );
 
   signal intt_diff        : signed(15 downto 0);
-  signal fq_a           : signed(15 downto 0);
-  signal fq_b           : signed(15 downto 0);
-  signal fq_a_sel       : std_ulogic_vector(1 downto 0);
-  signal fq_b_sel       : std_ulogic;
-  signal fq_result      : signed(15 downto 0);
+  signal ntt_diff         : signed(15 downto 0);
+  signal fq_a             : signed(15 downto 0);
+  signal fq_b             : signed(15 downto 0);
+  signal fq_result        : signed(15 downto 0);
 
-  signal intt_sum           : signed(15 downto 0);
-  signal ntt_sum            : signed(15 downto 0);
-  signal ntt_diff           : signed(15 downto 0);
-  signal barrett_input      : signed(15 downto 0);
-  signal barrett_result     : signed(15 downto 0);
-  signal butterfly_first  : signed(15 downto 0);
-  signal butterfly_second : signed(15 downto 0);
-  signal butterfly_result : std_ulogic_vector(31 downto 0);
+  signal intermediate_sum : signed(15 downto 0);
+  signal barrett_input    : signed(15 downto 0);
+  signal barrett_result   : signed(15 downto 0);
+
+  signal rd_low  : signed(15 downto 0);
+  signal rd_high : signed(15 downto 0);
+
 begin
 
   funct7 <= inst_i(31 downto 25);
@@ -146,6 +142,7 @@ begin
   op_ntt         <= is_kyber_inst when funct7 = FUNCT7_NTT         else '0';
   op_intt        <= is_kyber_inst when funct7 = FUNCT7_INTT        else '0';
   op_supported   <= op_fqmul or op_reduce or op_set_twiddle or op_ntt or op_intt;
+
   valid_o        <= start_i and op_supported;
 
   operand_a <= signed(rs1_i(15 downto 0));
@@ -162,27 +159,26 @@ begin
     end if;
   end process;
 
-  -- FQMUL receives (a,b), NTT receives (b,twiddle), and INTT receives
-  -- (b-a,twiddle). All additions/subtractions retain 16-bit wraparound.
-  intt_diff  <= operand_b - operand_a;
-  fq_b_sel <= op_intt or op_ntt;
-  fq_a_sel <= op_intt & op_ntt;
+  -- FQMUL multiplies a*b, NTT multiplies b*twiddle, and INTT multiplies
+  -- (b-a)*twiddle. All additions/subtractions retain 16-bit wraparound.
+  intt_diff <= operand_b - operand_a;
 
-fqmul_mux1 : process(fq_a_sel, intt_diff, operand_b, operand_a)
-begin
-  case fq_a_sel is
-    when "10"   => fq_a <= intt_diff;  -- INTT
-    when "01"   => fq_a <= operand_b;  -- NTT
-    when others => fq_a <= operand_a;  -- FQMUL
-  end case;
-end process;
-
-  fqmul_mux2 : process(fq_b_sel, twiddle_q, operand_b)
+  fqmul_input_mux : process(op_fqmul, op_intt, op_ntt, operand_a, operand_b,
+                            intt_diff, twiddle_q)
   begin
-    case fq_b_sel is
-      when '1'    => fq_b <= twiddle_q;
-      when others => fq_b <= operand_b;
-    end case;
+    fq_a <= (others => '0');
+    fq_b <= (others => '0');
+
+    if op_fqmul = '1' then
+      fq_a <= operand_a;
+      fq_b <= operand_b;
+    elsif op_intt = '1' then
+      fq_a <= twiddle_q;
+      fq_b <= intt_diff;
+    elsif op_ntt = '1' then
+      fq_a <= twiddle_q;
+      fq_b <= operand_b;
+    end if;
   end process;
 
   fqmul_inst : entity work.fq_mul(rtl)
@@ -192,17 +188,28 @@ end process;
       fq_result => fq_result
     );
 
-  -- INTT's Barrett input is a+b; keep this independent of FQMUL.
-  intt_sum <= operand_a + operand_b;
-  ntt_sum  <= operand_a + fq_result;
   ntt_diff <= operand_a - fq_result;
 
-  barrett_mux : process(op_intt, intt_sum, operand_a)
+  fq_mul_output_mux : process(op_ntt, op_intt, operand_a, operand_b, fq_result)
   begin
-    case op_intt is
-      when '1'    => barrett_input <= intt_sum;
-      when others => barrett_input <= operand_a;
-    end case;
+    if op_ntt = '1' then
+      intermediate_sum <= operand_a + fq_result;
+    elsif op_intt = '1' then
+      intermediate_sum <= operand_a + operand_b;
+    else
+      intermediate_sum <= (others => '0');
+    end if;
+  end process;
+
+  barrett_mux : process(op_reduce, op_intt, operand_a, intermediate_sum)
+  begin
+    if op_reduce = '1' then
+      barrett_input <= operand_a;
+    elsif op_intt = '1' then
+      barrett_input <= intermediate_sum;
+    else
+      barrett_input <= (others => '0');
+    end if;
   end process;
 
   barrett_inst : entity work.barret_reduce(rtl)
@@ -211,40 +218,35 @@ end process;
       barret_result => barrett_result
     );
 
-  first_out_mux : process(op_intt, barrett_result, ntt_sum)
+  rd_high_mux : process(op_fqmul, op_reduce, op_ntt, op_intt,
+                        fq_result, barrett_result, ntt_diff)
   begin
-    case op_intt is
-      when '1'    => butterfly_first <= barrett_result;
-      when others => butterfly_first <= ntt_sum;
-    end case;
-  end process;
+    rd_high <= (others => '0');
 
-  second_out_mux : process(op_intt, fq_result, ntt_diff)
-  begin
-    case op_intt is
-      when '1'    => butterfly_second <= fq_result;
-      when others => butterfly_second <= ntt_diff;
-    end case;
-  end process;
-
-  butterfly_result <= std_ulogic_vector(butterfly_second) &
-                      std_ulogic_vector(butterfly_first);
-
-  -- The NEORV32 CFU proxy registers this 32-bit result when valid_o is high.
-  rd_mux : process(is_kyber_inst, funct7, fq_result, barrett_result, butterfly_result)
-  begin
-    result_o <= (others => '0');
-    if is_kyber_inst = '1' then
-      case funct7 is
-        when FUNCT7_FQMUL =>
-          result_o <= std_ulogic_vector(resize(fq_result, 32));
-        when FUNCT7_REDUCE =>
-          result_o <= std_ulogic_vector(resize(barrett_result, 32));
-        when FUNCT7_NTT | FUNCT7_INTT =>
-          result_o <= butterfly_result;
-        when others =>
-          null; -- SET_TWIDDLE and invalid functions return zero.
-      end case;
+    if op_fqmul = '1' then
+      rd_high <= (others => fq_result(15));
+    elsif op_reduce = '1' then
+      rd_high <= (others => barrett_result(15));
+    elsif op_ntt = '1' then
+      rd_high <= ntt_diff;
+    elsif op_intt = '1' then
+      rd_high <= fq_result;
     end if;
   end process;
+
+  rd_low_mux : process(op_fqmul, op_reduce, op_ntt, op_intt,
+                       fq_result, barrett_result, intermediate_sum)
+  begin
+    rd_low <= (others => '0');
+
+    if op_fqmul = '1' then
+      rd_low <= fq_result;
+    elsif (op_reduce = '1') or (op_intt = '1') then
+      rd_low <= barrett_result;
+    elsif op_ntt = '1' then
+      rd_low <= intermediate_sum;
+    end if;
+  end process;
+
+  result_o <= std_ulogic_vector(rd_high) & std_ulogic_vector(rd_low);
 end architecture rtl;

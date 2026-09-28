@@ -26,12 +26,12 @@ architecture rtl of barret_reduce is
   
 begin
 
-  barrett_product       <= BARRETT_V * signed(a);
+  barrett_product       <= BARRETT_V * a;
   barrett_shifted       <= shift_right(barrett_product, 26);
   barrett_quotient      <= barrett_shifted(15 downto 0);
   barrett_multiple_wide <= barrett_quotient * KYBER_Q;
   barrett_multiple      <= barrett_multiple_wide(15 downto 0);
-  result                <= signed(a) - barrett_multiple;
-  barret_result         <= signed(result);
+  result                <= a - barrett_multiple;
+  barret_result         <= result;
   
 end architecture rtl;
