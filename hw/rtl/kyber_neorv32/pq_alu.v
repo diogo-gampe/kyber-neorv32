@@ -154,12 +154,9 @@ module pq_alu (
   assign operand_a = $signed(rs1_i[15:0]);
   assign operand_b = $signed(rs2_i[15:0]);
 
-  wire reset;
-  assign reset = ~rstn_i;
-
   // Leitura sincrona: twiddle_q fica disponivel para a instrucao seguinte.
   always @(posedge clk_i) begin
-    if (reset) begin
+    if (rstn_i) begin
       twiddle_q <= 16'sd0;
     end else if (start_i && op_set_twiddle) begin
       twiddle_q <= zeta_lut[rs1_i[6:0]];

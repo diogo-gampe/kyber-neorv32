@@ -317,6 +317,7 @@ int main(void) {
     int32_t a = (int16_t)a_fqmul_i[idx];
  1e4:	018a07b3          	add	a5,s4,s8
  1e8:	00079a83          	lh	s5,0(a5)
+ 
     int32_t b = (int16_t)b_fqmul_i[idx];
  1ec:	019a07b3          	add	a5,s4,s9
  1f0:	00079d83          	lh	s11,0(a5)
@@ -337,11 +338,6 @@ int main(void) {
  206:	2915                	jal	63a <neorv32_cpu_get_cycle>
  208:	c82a                	sw	a0,16(sp)
 
-  register uint32_t __rd;
-  register uint32_t __rs1 = rs1;
-  register uint32_t __rs2 = rs2;
-
-  asm volatile (".insn r %3, %4, %5, %0, %1, %2" : "=r"(__rd) : "r"(__rs1), "r"(__rs2), "i"(opcode), "i"(funct3), "i"(funct7));
  20a:	01ba8a8b          	.insn	4, 0x01ba8a8b
     uint32_t ise_result = pq_fqmul((uint32_t)a, (uint32_t)b);
     c5 = (uint32_t)neorv32_cpu_get_cycle();

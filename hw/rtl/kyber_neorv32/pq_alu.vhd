@@ -166,8 +166,6 @@ begin
   fqmul_input_mux : process(op_fqmul, op_intt, op_ntt, operand_a, operand_b,
                             intt_diff, twiddle_q)
   begin
-    fq_a <= (others => '0');
-    fq_b <= (others => '0');
 
     if op_fqmul = '1' then
       fq_a <= operand_a;
@@ -178,7 +176,12 @@ begin
     elsif op_ntt = '1' then
       fq_a <= twiddle_q;
       fq_b <= operand_b;
-    end if;
+    else
+		fq_a <= (others => '0');
+		fq_b <= (others => '0');
+	 
+	 end if;
+	 
   end process;
 
   fqmul_inst : entity work.fq_mul(rtl)

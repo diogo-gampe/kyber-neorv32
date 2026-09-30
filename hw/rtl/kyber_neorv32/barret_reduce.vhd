@@ -8,30 +8,32 @@ use ieee.numeric_std.all;
 -- Todas operações por enquanto são combinacionais
 entity barret_reduce is
   port (
-    a             : in  signed(15 downto 0);
-    barret_result : out signed(15 downto 0)
+  
+    barret_input    : in  std_ulogic_vector(15 downto 0);
+    barret_result : out std_ulogic_vector(15 downto 0);
+
   );
 end entity barret_reduce;
 
 architecture rtl of barret_reduce is
-  constant KYBER_Q   : signed(15 downto 0) := to_signed(3329, 16);
-  constant BARRETT_V : signed(15 downto 0) := to_signed(20159, 16);
 
-  signal barrett_product       : signed(31 downto 0);
-  signal barrett_shifted       : signed(31 downto 0);
-  signal barrett_quotient      : signed(15 downto 0);
-  signal barrett_multiple_wide : signed(31 downto 0);
-  signal barrett_multiple      : signed(15 downto 0);
-  signal result               : signed(15 downto 0);
-  
+    constant KYBER_Q    : signed(15 downto 0)   := to_signed(3329, 16); 
+    constant BARRETT_V  : signed(15 downto 0)   := to_signed(20159, 16);
+
+    
+    signal barrett_product       : signed(31 downto 0);
+    signal barrett_shifted       : signed(31 downto 0);
+    signal barrett_quotient      : signed(15 downto 0);
+    signal barrett_multiple_wide : signed(31 downto 0);
+    signal barrett_multiple      : signed(15 downto 0);
+
 begin
 
-  barrett_product       <= BARRETT_V * a;
-  barrett_shifted       <= shift_right(barrett_product, 26);
-  barrett_quotient      <= barrett_shifted(15 downto 0);
-  barrett_multiple_wide <= barrett_quotient * KYBER_Q;
+  -- t = (20159*a) >>> 26; r = a - t*3329.
+  barrett_product       <= BARRETT_V * barrett_input;
+  barrett_shifted       <= barret_product >> 26; 
+  barrett_multiple_wide <= barret_shifted * KYBER_Q;
   barrett_multiple      <= barrett_multiple_wide(15 downto 0);
-  result                <= a - barrett_multiple;
-  barret_result         <= result;
-  
-end architecture rtl;
+  barrett_result        <= barrett_input - barrett_multiple;
+
+end architecture rtl; 

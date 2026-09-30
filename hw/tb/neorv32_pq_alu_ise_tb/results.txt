@@ -1,0 +1,16 @@
+========= Resumo Teste com implementacao base NEORV32 ==============
+Nmero medio de ciclos sem ISE p/ FQMUL: 52
+Nmero medio de ciclos sem ISE p/ REDUCE: 49
+Nmero medio de ciclos sem ISE p/ Butt. CT: 74
+Nmero medio de ciclos sem ISE p/ Butt. GS: 125
+
+========= Resumo Teste com implementacao de ISE NEORV32 ==============
+Nmero medio de ciclos com ISE p/ FQMUL: 6
+Nmero medio de ciclos com ISE p/ REDUCE: 8
+Nmero medio de ciclos com ISE p/ Butt. CT: 18
+Nmero medio de ciclos com ISE p/ Butt. GS: 15
+Overhead da medicao: ciclos=32
+
+========= RESUMO ==============
+Erros: 0
+===============  [PASS] SUCESSO! ===========

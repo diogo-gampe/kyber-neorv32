@@ -4,10 +4,6 @@
 #include <stdint.h>
 #include <neorv32_intrinsics.h>
 
-/* CUSTOM-0, funct3=0. Operands use signed low 16 bits; butterfly
- * outputs pack first coefficient in 15:0 and second in 31:16.
- * SET_TWIDDLE changes persistent CFU state. Interrupt handlers using
- * this unit must restore that state before returning to their caller. */
 static inline uint32_t pq_fqmul(uint32_t a, uint32_t b) {
   return RISCV_INSTR_R_TYPE(RISCV_OPCODE_CUSTOM0, 0, 0, a, b);
 }
